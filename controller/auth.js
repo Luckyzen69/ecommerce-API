@@ -1,6 +1,6 @@
 const UserModel = require("../model/User")
 let bcrypt = require('bcrypt')
-
+var jwt = require('jsonwebtoken');
 
               // sign up
 
@@ -19,7 +19,7 @@ let bcrypt = require('bcrypt')
       res.send(user)
     }catch(err){
       res.status(500).send({error:err.message})
-    }
+    } 
   }
             
 
@@ -32,21 +32,24 @@ let bcrypt = require('bcrypt')
           console.log(user);
 
          if(user){
-           let hashedPassword = user.password //password stored in db
-          let matched= await bcrypt.compare(req.body.password, hashedPassword);
+          user = user.toObject()
+          let hashedPassword = user.password //password stored in db
+          let matched=  await bcrypt.compare(req.body.password, hashedPassword);
+          delete user.password
+           const SECRET_KEY = 'shhhhh';
+           var token = jwt.sign( user,SECRET_KEY);
           if(matched){  
-            console.log("logged in");
-         }
+            return res.send({
+              user: user,
+              "token":token,
+            })
         }
 
-          return res.status(401).send("invaid credentials")
-  
-        
+          return res.status(401).send("invaid credentials")}
+          next();
 
     }catch(err){
-      res.status(500).send({
-        error:err.message
-      })
+      next(err);
     }
   }
 

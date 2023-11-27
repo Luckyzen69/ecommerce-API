@@ -5,27 +5,25 @@ const ProductModal = require('../model/Product')
     let product = await ProductModal.find()
     res.send(product)
   }
-             function checkAuthentication(req,res,next){
-                let loggedIn = false;
-                if(!loggedIn){
-                    res.status(404).send("unathuntication")
-                }
-
-             }
-
 
 const createProduct = async function (req,res,next){
     console.log('req.body',req.body);
     try{
-        let product =  await ProductModal.create({
-            title: req.body.title,
-            price: req.body.price
-        })
+        let product =  await ProductModal.create({...req.body,createdBy:req.user._id}
+            // SPREAD OPERATION
+        //     {
+        //     title: req.body.title,
+        //     price: req.body.price,
+        //     discription:req.body.discription,
+        //     creatdBy:req.user._id,
+        // }
+        )
         res.send(product)
+        console.log("product created",req.user);
     }
     catch(err){
-        res.status(404).send({error: err.message})
-        next();
+      
+        next(err);
     }
   }
  module.exports ={

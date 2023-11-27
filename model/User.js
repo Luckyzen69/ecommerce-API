@@ -5,9 +5,25 @@ const Schema = mongoose.Schema;
 
 
 const UserSchema = new Schema({
+  name:{
+    require: true,
+    type: String,
+    minLength:"3",
+  },
   email: {
     type: String,
-    required: true
+    required: true,
+    validate:{
+      validator:async function(requestValue){
+        //custom logic
+      let user = await mongoose.models.User.findOne({email: req.body.email})
+      if(user){
+        return false
+      }
+      return true;
+      },
+      message:"email already used",
+    }
   },
   password: {
     type: String,
