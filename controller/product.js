@@ -7,7 +7,11 @@ const ProductModal = require('../model/Product')
   }
 
 const createProduct = async function (req,res,next){
-    console.log('req.body',req.body);
+  console.log(path.resolve());
+  req.files.image.mv()  
+ 
+  console.log('req.body',req.body);         
+  console.log('productc-files',req.files.image);  
     try{
         let product =  await ProductModal.create({...req.body,createdBy:req.user._id}
             // SPREAD OPERATION
@@ -18,7 +22,7 @@ const createProduct = async function (req,res,next){
         //     creatdBy:req.user._id,
         // }
         )
-        res.send(product)
+      res.send(product)
         console.log("product created",req.user);
     }
     catch(err){

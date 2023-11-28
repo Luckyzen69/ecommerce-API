@@ -22,6 +22,9 @@ const ProductSchema = new Schema({
       require: true,
       type:ObjectId,
       ref:"User"
+     },
+     image:{
+      type: String // we save image in some direcity and only save image path
      }
  });
  

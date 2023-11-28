@@ -40,7 +40,7 @@ var jwt = require('jsonwebtoken');
            var token = jwt.sign( user,SECRET_KEY);
           if(matched){  
             return res.send({
-              user: user,
+              "user": user,
               "token":token,
             })
         }

@@ -16,7 +16,7 @@ const UserSchema = new Schema({
     validate:{
       validator:async function(requestValue){
         //custom logic
-      let user = await mongoose.models.User.findOne({email: req.body.email})
+      let user = await mongoose.models.User.findOne({email: requestValue})
       if(user){
         return false
       }
