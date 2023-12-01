@@ -1,5 +1,5 @@
 const UserModel = require("../model/User")
-let bcrypt = require('bcrypt')
+let bcrypt = require('bcrypt')  
 var jwt = require('jsonwebtoken');
 
               // sign up
