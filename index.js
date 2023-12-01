@@ -25,10 +25,12 @@ app.use(handleSeverError)
 
 app.use((req, res, next) => {
   res.status(400).send('server error from front');
+  console.log(err);
   // next();
 })
 app.use((err,req, res, next) => {
   res.status(500).send('server error from back');
+  console.log(err);
   // next();
 })
 

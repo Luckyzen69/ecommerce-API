@@ -1,6 +1,7 @@
 module.exports = (err,req,res,next)=>{
   let status =500
   let message ="Server Error"
+  let errors=[]
 
   if(err.name == "ValidationError"){
     status = 400;

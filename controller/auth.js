@@ -21,14 +21,14 @@ var jwt = require('jsonwebtoken');
       res.status(500).send({error:err.message})
     } 
   }
-            
+          
 
    // login
   const login = async (req,res,next)=>{
     console.log('req.body',req.body);
     try{
           // check if email exist in db or not 
-          let user = await UserModel.findOne({email: req.body.email})
+          let user = await UserModel.findOne({email: req.body.email}).select("+password")
           console.log(user);
 
          if(user){
@@ -37,10 +37,10 @@ var jwt = require('jsonwebtoken');
           let matched=  await bcrypt.compare(req.body.password, hashedPassword);
           delete user.password
            const SECRET_KEY = 'shhhhh';
-           var token = jwt.sign( user,SECRET_KEY);
+           var token = jwt.sign( user ,SECRET_KEY);
           if(matched){  
             return res.send({
-              "user": user,
+              user: user,
               "token":token,
             })
         }

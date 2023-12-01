@@ -6,7 +6,7 @@ function checkAuthentication(req, res, next) {
 
     try {
         let loggedIn = false;
-        let token = req.headers.authorization?.replace("Bearer","")
+        let token = req.headers.authorization?.replace("Bearer ","")
         if (token) {
             try {
                 var decoded = jwt.verify(token, "shhhhh")
